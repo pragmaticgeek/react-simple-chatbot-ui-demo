@@ -30,32 +30,29 @@ function App() {
     },
   ]);
 
-  const handleSubmit = useCallback(
-    (value: string) => {
-      setIsQuerying(true);
+  const handleSubmit = useCallback((value: string) => {
+    setIsQuerying(true);
+    setChatConversations((conversations) => [
+      ...conversations,
+      {
+        userInfo: TEST_USER_INFO,
+        id: (conversations.length + 1).toString(),
+        role: MessageRole.USER,
+        message: value,
+      },
+    ]);
+    setTimeout(() => {
+      setIsQuerying(false);
       setChatConversations((conversations) => [
         ...conversations,
         {
-          userInfo: TEST_USER_INFO,
           id: (conversations.length + 1).toString(),
-          role: MessageRole.USER,
-          message: value,
+          role: MessageRole.ASSISTANT,
+          message: "This is a mocked sample chat bot assistant response",
         },
       ]);
-      setTimeout(() => {
-        setIsQuerying(false);
-        setChatConversations((conversations) => [
-          ...conversations,
-          {
-            id: (conversations.length + 1).toString(),
-            role: MessageRole.ASSISTANT,
-            message: "This is a mocked sample chat bot assistant response",
-          },
-        ]);
-      }, 3000);
-    },
-    [chatConversations]
-  );
+    }, 3000);
+  }, []);
 
   return (
     <ChatUI
