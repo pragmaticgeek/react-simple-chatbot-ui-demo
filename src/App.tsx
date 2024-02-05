@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react";
+import { useCallback, useRef, useState } from "react";
 import { MessageRole } from "./enums/MessageRole";
 import { Conversations } from "./types";
 import { ChatUI } from "./components/chat-ui/ChatUI";
@@ -7,6 +7,7 @@ import { faMailReply } from "@fortawesome/free-solid-svg-icons";
 
 function App() {
   const [isQuerying, setIsQuerying] = useState<boolean>(false);
+  const chatConversationsContainerRef = useRef<HTMLDivElement>(null);
 
   const [chatConversations, setChatConversations] = useState<Conversations>([
     {
@@ -31,23 +32,21 @@ function App() {
   const handleSubmit = useCallback(
     (value: string) => {
       setIsQuerying(true);
-
-      const newConverstationChain = [
-        ...chatConversations,
+      setChatConversations((conversations) => [
+        ...conversations,
         {
           userInfo: { firstName: "Test", lastName: "User" },
-          id: (chatConversations.length + 1).toString(),
+          id: (conversations.length + 1).toString(),
           role: MessageRole.USER,
           message: value,
         },
-      ];
-      setChatConversations(newConverstationChain);
+      ]);
       setTimeout(() => {
         setIsQuerying(false);
-        setChatConversations([
-          ...newConverstationChain,
+        setChatConversations((conversations) => [
+          ...conversations,
           {
-            id: (chatConversations.length + 1).toString(),
+            id: (conversations.length + 1).toString(),
             role: MessageRole.ASSISTANT,
             message: "This is a mocked sample chat bot assistant response",
           },
@@ -65,6 +64,7 @@ function App() {
       disabled={isQuerying}
       conversations={chatConversations}
       customSubmitIcon={<FontAwesomeIcon icon={faMailReply} />}
+      chatConversationsContainerRef={chatConversationsContainerRef}
     />
   );
 }

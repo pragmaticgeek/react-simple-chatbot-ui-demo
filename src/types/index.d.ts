@@ -1,3 +1,5 @@
+import { RefObject } from "react";
+
 /** defining data types **/
 
 export type User = {
@@ -36,6 +38,7 @@ export interface IChatInputProps {
 export interface IChatConversationsProps {
   conversations: Conversations;
   isQuerying: boolean;
+  chatConversationsContainerRef: RefObject<HTMLDivElement>;
 }
 
 export interface IChatMessageProps {
