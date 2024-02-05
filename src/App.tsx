@@ -5,6 +5,7 @@ import { ChatUI } from "./components/chat-ui/ChatUI";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMailReply } from "@fortawesome/free-solid-svg-icons";
 
+const TEST_USER_INFO = { firstName: "Test", lastName: "User" };
 function App() {
   const [isQuerying, setIsQuerying] = useState<boolean>(false);
 
@@ -19,6 +20,7 @@ function App() {
       id: "2",
       role: MessageRole.USER,
       message: "Amazing. where's the code?",
+      userInfo: TEST_USER_INFO,
     },
     {
       id: "3",
@@ -34,7 +36,7 @@ function App() {
       setChatConversations((conversations) => [
         ...conversations,
         {
-          userInfo: { firstName: "Test", lastName: "User" },
+          userInfo: TEST_USER_INFO,
           id: (conversations.length + 1).toString(),
           role: MessageRole.USER,
           message: value,
