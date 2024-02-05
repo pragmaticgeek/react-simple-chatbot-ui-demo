@@ -1,4 +1,4 @@
-import { useCallback, useRef, useState } from "react";
+import { useCallback, useState } from "react";
 import { MessageRole } from "./enums/MessageRole";
 import { Conversations } from "./types";
 import { ChatUI } from "./components/chat-ui/ChatUI";
@@ -7,7 +7,6 @@ import { faMailReply } from "@fortawesome/free-solid-svg-icons";
 
 function App() {
   const [isQuerying, setIsQuerying] = useState<boolean>(false);
-  const chatConversationsContainerRef = useRef<HTMLDivElement>(null);
 
   const [chatConversations, setChatConversations] = useState<Conversations>([
     {
@@ -64,7 +63,6 @@ function App() {
       disabled={isQuerying}
       conversations={chatConversations}
       customSubmitIcon={<FontAwesomeIcon icon={faMailReply} />}
-      chatConversationsContainerRef={chatConversationsContainerRef}
     />
   );
 }
